@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import {Moment} from 'moment';
 
-export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
+export interface Calendar {
+  month: number;
+  day: number;
 }
 @Component({
   selector: 'app-main-calendar',
@@ -13,53 +12,48 @@ export interface Tile {
   styleUrls: ['./main-calendar.component.css']
 })
 export class MainCalendarComponent implements OnInit {
-  tiles: Tile[] = [
-    {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
+  now: Moment;
+  month: number;
+  nameMonth: any;
+  controllerArrows = 0;
+  listMonth: Calendar[] = [];
+  dayStart: number;
+  daysInMonth: number;
+  date: any;
 
-    {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-
-    {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-
-    {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-
-    {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-  ];
+  daysInLastMonth: number;
   constructor() { }
 
   ngOnInit() {
-    const now = moment(); // add this 2 of 4
-    console.log('hello world', now.format()); // add this 3 of 4
-    console.log(now.add(7, 'days').format()); // add this 4of 4
+    this.now = moment(); // add this 2 of 4
+    this.init();
   }
 
+  private init(): void {
+    this.listMonth = [];
+    this.month = this.now.month() + 1;
+    this.date = moment(`2020-${this.month}-01`, 'YYYY-MM-DD');
+    this.nameMonth = moment(`2020-${this.month}-01`, 'MMM MMMM');
+    this.dayStart = this.date.day();
+    this.daysInMonth =  this.date.daysInMonth();
+    if ( this.dayStart > 1 ) {
+      this.daysInLastMonth = moment(`2020-${this.month - 1 }-01`, 'YYYY-MM-DD').daysInMonth();
+      this.fillingCalendar(this.daysInLastMonth - (this.dayStart - 2), this.daysInLastMonth, this.month - 1 );
+    }
+    this.fillingCalendar(1, this.daysInMonth, this.month );
+    console.log(this.listMonth);
+  }
+  private fillingCalendar(start: number, end: number, month: number) {
+    for ( let i = start ; i <= end ; i ++ ) {
+      this.listMonth.push( {
+        day: i,
+        month
+      });
+    }
+  }
+  private moreMonths( diff?: number) {
+    this.controllerArrows += diff;
+    this.now =  moment().add(   this.controllerArrows, 'month');
+    this.init();
+  }
 }
