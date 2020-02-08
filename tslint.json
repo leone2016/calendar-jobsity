@@ -6,21 +6,14 @@
     "deprecation": {
       "severity": "warning"
     },
-    "component-class-suffix": true,
     "contextual-lifecycle": true,
-    "directive-class-suffix": true,
     "directive-selector": [
       true,
       "attribute",
       "app",
       "camelCase"
     ],
-    "component-selector": [
-      true,
-      "element",
-      "app",
-      "kebab-case"
-    ],
+    "component-selector": false,
     "import-blacklist": [
       true,
       "rxjs/Rx"
@@ -44,14 +37,6 @@
       }
     ],
     "no-consecutive-blank-lines": false,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace"
-    ],
     "no-empty": false,
     "no-inferrable-types": [
       true,
@@ -74,16 +59,44 @@
     "trailing-comma": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
-    "no-input-rename": true,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
-    "no-output-on-prefix": true,
     "no-output-rename": true,
     "no-outputs-metadata-property": true,
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
+    "angular-whitespace": [true, "check-interpolation", "check-semicolon"],
+    "banana-in-box": true,
+    "templates-no-negated-async": true,
+    "max-inline-declarations": true,
+    "no-life-cycle-call": true,
+    "prefer-output-readonly": true,
+    "no-conflicting-life-cycle-hooks": true,
+    "enforce-component-selector": true,
+    "no-queries-parameter": true,
+    "prefer-inline-decorator": true,
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
+    "use-view-encapsulation": true,
+    "no-attribute-parameter-decorator": true,
+    "no-output-named-after-standard-event": true,
+    "no-input-rename": true,
+    "no-output-on-prefix": true,
+    "no-forward-ref": true,
+    "no-unused-css": true,
+    "use-life-cycle-interface": true,
+    "contextual-life-cycle": true,
+    "trackBy-function": true,
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
+    "pipe-impure": true,
+    "template-cyclomatic-complexity": [true, 5],
+    "template-conditional-complexity": [true, 4],
+    "file-name-casing": [true, "kebab-case"],
+    "no-console": [true, "log"]
   },
   "rulesDirectory": [
     "codelyzer"

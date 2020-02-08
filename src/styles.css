@@ -27,13 +27,13 @@ p {
 }
 
 .toolbar {
-  height: 42px;
-  margin: -8px;
+  height: 56px;
   display: flex;
   align-items: center;
   background-color: #eeeeee;
   color: black;
   font-weight: 600;
+  box-shadow: 0 0.2rem 1rem rgba(0,0,0,.2);
 }
 
 .toolbar img {
@@ -55,6 +55,9 @@ p {
   /*max-width: 960px;*/
   flex-direction: column;
   align-items: center;
+}
+.content.remainder{
+  padding: 0 10rem;
 }
 
 svg.material-icons {
@@ -278,7 +281,21 @@ svg#clouds {
   }
 }
 
+.today{
+  width: 19px;
+  height: 21px;
+  border: .5px solid #ff4081;
+  border-radius: 1rem;
+  padding-left: 4px;
+  background-color: #f7719f;
+  color: #fff;
+}
+
 @media screen and (max-width: 575px) {
+  .content.remainder{
+    padding: 0 1rem;
+  }
+
   svg#rocket-smoke {
     display: none;
     visibility: hidden;

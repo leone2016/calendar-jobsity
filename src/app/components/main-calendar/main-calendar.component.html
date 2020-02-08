@@ -1,7 +1,5 @@
 <!-- Toolbar -->
-<!--<app-header></app-header>-->
-<button (click)="moreMonths(-1)"><</button><button (click)="moreMonths(+1)"> > </button>
-{{ now | date:'MMMM'}} of {{ now | date:'y'}}
+<app-header></app-header>
 <div class="content" role="main">
   <table class="table table-bordered ">
     <thead style=" font-size: .9rem">
@@ -16,12 +14,10 @@
     </tr>
     </thead>
     <tbody>
-
     <tr *ngFor="let week of [0,1,2,3,4]" >
       <td *ngFor=" let day of listMonth | printDay:week">
       <div class="day">{{day.day}}</div>
       </td>
-
     </tr>
     </tbody>
   </table>

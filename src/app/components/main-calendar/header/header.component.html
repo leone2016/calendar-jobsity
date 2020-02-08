@@ -1,0 +1,14 @@
+<div class="toolbar" role="banner">
+  <img
+    width="100"
+    alt="Angular Logo"
+    src="https://www.jobsity.com/themes/custom/jobsity/images/logo/brand-jobsity.svg"
+  />
+  <!---->
+  <a style="cursor: pointer"(click)="moreMonths(-1)"><i class="fa fa-angle-left fa-2x"></i></a>
+  <a  style="padding-left: 1rem; cursor: pointer" (click)="moreMonths(+1)"> <i class="fa fa-angle-right fa-2x"></i>
+  </a> <span style="padding-left: 1rem">{{ now | date:'MMMM'}} of {{ now | date:'y' }}</span>
+
+  <div class="spacer"></div>
+  <button [routerLink]="['/remainder']">New Reminder</button>
+</div>
