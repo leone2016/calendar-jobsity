@@ -1,52 +1,52 @@
+<a style="cursor: pointer; padding-left: 1rem" (click)="backClicked() "><i class="fa fa-angle-left fa-2x"></i></a>
 <div class="content remainder " role="main">
 <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" >
   <div class="form-group">
-    <label for="">Description</label>
-    <input type="text"
-           class="form-control"
-           placeholder="description"
-           name="description"
-           formControlName="description"
-    >
+    <label  class="form-label" for="">Description</label>
+    <div class="ui-inputgroup">
+      <input type="text"
+             pInputText
+             placeholder="description"
+             name="description"
+             formControlName="description"
+      >
+
+<!--      {{this.reminderForm.controls.description.errors | json }}-->
+
+    </div>
+
   </div>
   <div class="form-group">
-    <label for="">Date Start</label>
-    <input type="date"
-           class="form-control"
-           placeholder="date start"
-           name="dateStart"
-           formControlName="dateStart"
-    >
+    <label class="form-group" for="">Date Start</label>
+    <div class="ui-inputgroup">
+    <p-calendar  class="ui-calendar" formControlName="dateStart" [showTime]="true"></p-calendar>
+    </div>
   </div>
   <div class="form-group">
-    <label for="">Date End</label>
-    <input type="date"
-           class="form-control"
-           placeholder="Date End"
-           name="dateEnd"
-           formControlName="dateEnd"
-    >
+    <label class="form-group" for="">Date End</label>
+    <div class="ui-inputgroup">
+    <p-calendar  class="ui-calendar" formControlName="dateEnd" [showTime]="true"></p-calendar>
+    </div>
   </div>
 
   <div class="form-group">
-    <label for="">City</label>
+    <label class="form-group" or="">City</label>
+    <div class="ui-inputgroup">
     <input type="text"
-           class="form-control"
+           pInputText
            placeholder="City"
            name="city"
            formControlName="city"
     >
+    </div>
   </div>
 
   <div class="form-group">
-    <label for="">Color</label>
-    <input type="text"
-           class="form-control"
-           placeholder="Color"
-           name="color"
-           formControlName="color"
-    >
+    <label class="form-group" for="">Label color :  </label>
+      <p-colorPicker formControlName="color"></p-colorPicker>
+<!--    <p-colorPicker  formControlName="color" format="hex" [inline]="true"> </p-colorPicker>-->
+<!--      <p style="margin-top:.5em">Selected Color: <span [ngStyle]="{'color':this.reminderForm.controls.color.value}">{{this.reminderForm.controls.color.value}}</span></p>-->
   </div>
-  <button [disabled]="reminderForm.invalid" type="submit">Submit</button>
+  <button class="ui-calendar" [disabled]="reminderForm.invalid" type="submit" mat-flat-button color="primary">Save</button>
 </form>
 </div>

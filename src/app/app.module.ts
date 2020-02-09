@@ -12,14 +12,13 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 
 import {environment} from '../environments/environment';
-import { ReminderComponent } from './components/reminder/reminder.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {APP_ROUTES} from "./app.routes";
+import {LocalStorageModule} from "angular-2-local-storage";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReminderComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,8 +29,11 @@ import {APP_ROUTES} from "./app.routes";
       maxAge: 25,
       logOnly: environment.production
     }),
-    FormsModule,
-    ReactiveFormsModule,
+    LocalStorageModule.forRoot({
+      prefix: 'calendar-app',
+      storageType: 'localStorage'
+    }),
+    HttpClientModule,
     APP_ROUTES
   ],
   providers: [],

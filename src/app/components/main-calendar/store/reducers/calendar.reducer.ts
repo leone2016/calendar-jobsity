@@ -1,20 +1,33 @@
 
 import {Moment} from 'moment';
 import * as moment from 'moment';
-import {calendarActions, DISABLE_LOADING, ENABLE_LOADING, SET_DATE} from "../calendar.action";
+import {CalendarActions, DISABLE_LOADING, ENABLE_LOADING, SET_DATE, SET_REMINDER} from "../calendar.action";
+import {Reminder} from "../../../reminder/reminder.model";
 export interface ICalendarState {
   isLoading?: boolean;
   now: Moment;
+  reminder: Reminder[];
 }
 
 const CALENDAR_INITIAL_STATE: ICalendarState = {
   isLoading: false,
-  now: moment()
+  now: moment(),
+  reminder:[{
+    code: '',
+    city: '',
+    isAllDay: false,
+    dateStart: '',
+    dateEnd: '',
+    dayCalendar: '',
+    description: '',
+    color: ''
+  }]
+
 }
 
 export function calendarReducer(
   state: ICalendarState = CALENDAR_INITIAL_STATE,
-  action: calendarActions
+  action: CalendarActions
 ): ICalendarState {
   switch ( action.type ) {
     case ENABLE_LOADING:
@@ -31,6 +44,11 @@ export function calendarReducer(
       return {
         ...state,
         now: action.now
+      }
+    case SET_REMINDER:
+      return {
+        ...state,
+        reminder: action.payload
       }
     default:
       return state;

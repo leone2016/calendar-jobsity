@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  openweatherKey: 'f164b0737ab0073f82160008cdfab121'
+  openweatherKey: 'f164b0737ab0073f82160008cdfab121',
+  lclStgReminders: 'reminders'
 };
 
 /*

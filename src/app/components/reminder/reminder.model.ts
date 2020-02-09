@@ -5,6 +5,8 @@ export class Reminder {
   isAllDay: boolean;
   dateStart: string;
   dateEnd: string;
+  dayCalendar: string;
+  monthCalendar: string;
   description: string;
   color: string;
 
@@ -15,6 +17,8 @@ export class Reminder {
     this.dateStart = obj && obj.dateStart || null;
     this.dateEnd = obj && obj.dateEnd || null;
     this.description = obj && obj.description || null;
+    this.dayCalendar = obj && obj.dayCalendar || null;
+    this.monthCalendar = obj && obj.monthCalendar || null;
     this.color = obj && obj.color || null;
   }
 }
@@ -25,6 +29,8 @@ interface ReminderObj {
   isAllDay: boolean;
   dateStart: string;
   dateEnd: string;
+  dayCalendar: string;
+  monthCalendar: string;
   description: string;
   color: string;
 }

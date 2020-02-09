@@ -1,4 +1,5 @@
 <!-- Toolbar -->
+
 <app-header></app-header>
 <div class="content" role="main">
   <table class="table table-bordered ">
@@ -15,8 +16,14 @@
     </thead>
     <tbody>
     <tr *ngFor="let week of [0,1,2,3,4]" >
-      <td *ngFor=" let day of listMonth | printDay:week">
-      <div class="day">{{day.day}}</div>
+      <td *ngFor=" let day of listMonth | printDay:week" (click)="openSnackBar(day.day, 'x')">
+      <div class="day" >{{day.day}}
+          <div class="activity">
+            <div class="activity_content" *ngFor="let reminder of listReminders|">
+              {{ reminder.description }}
+            </div>
+          </div>
+      </div>
       </td>
     </tr>
     </tbody>
