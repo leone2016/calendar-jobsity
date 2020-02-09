@@ -10,6 +10,12 @@
              name="description"
              formControlName="description"
       >
+
+    </div>
+    <div class="error" *ngIf="reminderForm.controls.description.errors &&
+                                reminderForm.controls.description.touched">
+      <p *ngIf="_f().description.errors['required']">Description is required</p>
+      <p *ngIf="_f().description.errors['maxlength']">Must be at most  {{_f().description.errors['maxlength']['requiredLength'] }} characters</p>
     </div>
   </div>
   <div class="form-group">
@@ -18,13 +24,6 @@
     <p-calendar  class="ui-calendar" formControlName="dateStart" [showTime]="true"></p-calendar>
     </div>
   </div>
-<!--  <div class="form-group">
-    <label class="form-group" for="">Date End</label>
-    <div class="ui-inputgroup">
-    <p-calendar  class="ui-calendar" formControlName="dateEnd" [showTime]="true"></p-calendar>
-    </div>
-  </div>-->
-
   <div class="form-group">
     <label class="form-group" or="">City</label>
     <div class="ui-inputgroup">
@@ -35,6 +34,10 @@
            formControlName="city"
            (blur)="searchWeather()"
     >
+    </div>
+    <div class="error" *ngIf="reminderForm.controls.city.errors &&
+                        reminderForm.controls.city.touched">
+      <p *ngIf="_f().city.errors['required']">City is required</p>
     </div>
   </div>
   <div class="form-group weather" *ngIf="weather !== undefined" >

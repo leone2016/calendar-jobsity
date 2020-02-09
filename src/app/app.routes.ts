@@ -4,6 +4,7 @@ import {ReminderComponent} from "./components/reminder/reminder.component";
 
 const appRoutes: Routes = [
   {path: '', component: MainCalendarComponent},
+  {path: ':labelMonth', component: MainCalendarComponent},
   {
     path: "remainder",
     component: ReminderComponent
