@@ -4,13 +4,15 @@
 import {Action} from '@ngrx/store';
 import {Moment} from 'moment';
 import {Reminder} from "../../reminder/reminder.model";
+import {Weather, WeatherModel} from "../model/wwather.model";
 
 export const ENABLE_LOADING = '[CALENDAR] Loading . . . ';
 export const DISABLE_LOADING = '[CALENDAR] End Loading . . . ';
 export const SET_DATE = '[CALENDAR] Set date Moment';
 export const GET_REMINDER = '[CALENDAR] Get reminder';
 export const SET_REMINDER = '[CALENDAR] Set reminder';
-export const GET_COUNTRIES = '[CALENDAR] Get contries';
+export const GET_WEATHER = '[CALENDAR] Get weather';
+export const LOAD_WEATHER = '[CALENDAR] load weather';
 
 
 export class EnableLoadingAction implements Action {
@@ -51,12 +53,29 @@ export class SetReminder implements Action {
   }
 }
 
-// export class GetCountries implements Action {
-//   public readonly type: string = GET_COUNTRIES;
-// }
+/**
+ * get weather
+ */
+export class GetWeather implements Action{
+  readonly type = GET_WEATHER;
+  public payload: string;
+  constructor( city: string ){
+    console.log(city);
+    this.payload = city;
+  }
+}
+
+export class LoadWeather implements Action{
+  readonly type = LOAD_WEATHER;
+  public payload: WeatherModel;
+  constructor( payload: WeatherModel){
+    this.payload = payload;
+  }
+}
 export type CalendarActions =
   EnableLoadingAction |
   DisableLoadingAction |
   GetReminder |
   SetReminder |
+  LoadWeather |
   SetDate;

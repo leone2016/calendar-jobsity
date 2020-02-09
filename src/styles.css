@@ -318,6 +318,7 @@ svg#clouds {
 
 .activity{
   position: relative;
+  width: 50%;
 }
 
 .activity .activity_content{
@@ -328,7 +329,9 @@ svg#clouds {
   border-radius: 1rem;
   cursor: pointer;
   font-weight: normal;
-  background-color: #d7dbef;
+  color: white;
+  background-color: #24edef;
+  width: auto;
 }
 
 
@@ -346,6 +349,15 @@ svg#clouds {
 
 .ui-calendar {
   width: 100%;
+}
+
+.weather{
+  border: 1px solid;
+  color: #1976d2;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 1rem rgba(0,0,0,.2);
+
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

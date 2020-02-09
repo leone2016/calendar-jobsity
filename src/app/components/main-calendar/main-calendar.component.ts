@@ -33,6 +33,7 @@ export class MainCalendarComponent implements OnInit, OnDestroy {
   private listReminders: Reminder[] = [];
 
 
+
   color: string;
 
   daysInLastMonth: number;

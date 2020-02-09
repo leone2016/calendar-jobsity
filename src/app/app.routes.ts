@@ -8,6 +8,10 @@ const appRoutes: Routes = [
     path: "remainder",
     component: ReminderComponent
   },
+  {
+    path: "remainder/:labelMonth",
+    component: ReminderComponent
+  },
   {path: '**', component: MainCalendarComponent}
 ];
 

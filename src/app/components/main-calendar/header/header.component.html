@@ -10,5 +10,5 @@
   </a> <span style="padding-left: 1rem">{{ now | date:'MMMM'}} of {{ now | date:'y' }}</span>
 
   <div class="spacer"></div>
-  <button [routerLink]="['/remainder']">New Reminder</button>
+  <button [routerLink]="['/remainder',  now | date:'y-M-d']">New Reminder</button>
 </div>

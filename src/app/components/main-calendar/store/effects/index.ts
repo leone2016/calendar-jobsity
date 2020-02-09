@@ -1,4 +1,4 @@
-import {CalendarEffects} from "../calendar.effects";
+import {CalendarEffects} from "./calendar.effects";
 
 export const Calendar_Effects: any[] = [CalendarEffects];
 

@@ -10,11 +10,7 @@
              name="description"
              formControlName="description"
       >
-
-<!--      {{this.reminderForm.controls.description.errors | json }}-->
-
     </div>
-
   </div>
   <div class="form-group">
     <label class="form-group" for="">Date Start</label>
@@ -22,12 +18,12 @@
     <p-calendar  class="ui-calendar" formControlName="dateStart" [showTime]="true"></p-calendar>
     </div>
   </div>
-  <div class="form-group">
+<!--  <div class="form-group">
     <label class="form-group" for="">Date End</label>
     <div class="ui-inputgroup">
     <p-calendar  class="ui-calendar" formControlName="dateEnd" [showTime]="true"></p-calendar>
     </div>
-  </div>
+  </div>-->
 
   <div class="form-group">
     <label class="form-group" or="">City</label>
@@ -37,15 +33,20 @@
            placeholder="City"
            name="city"
            formControlName="city"
+           (blur)="searchWeather()"
     >
     </div>
   </div>
-
+  <div class="form-group weather" *ngIf="weather !== undefined" >
+   {{weather.main.temp_max| number : '1.2-2'}}°/
+    {{weather.main.temp_min| number : '1.2-2'}}°
+    <b>{{weather.weather[0].description}}</b>
+    <img [src]="'http://openweathermap.org/img/wn/'+weather.weather[0].icon+'@2x.png'" alt="">
+    <p>{{weather.name}}, {{weather.sys.country}}</p>
+  </div>
   <div class="form-group">
     <label class="form-group" for="">Label color :  </label>
       <p-colorPicker formControlName="color"></p-colorPicker>
-<!--    <p-colorPicker  formControlName="color" format="hex" [inline]="true"> </p-colorPicker>-->
-<!--      <p style="margin-top:.5em">Selected Color: <span [ngStyle]="{'color':this.reminderForm.controls.color.value}">{{this.reminderForm.controls.color.value}}</span></p>-->
   </div>
   <button class="ui-calendar" [disabled]="reminderForm.invalid" type="submit" mat-flat-button color="primary">Save</button>
 </form>
