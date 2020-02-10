@@ -16,4 +16,4 @@ const appRoutes: Routes = [
   {path: '**', component: MainCalendarComponent}
 ];
 
-export const APP_ROUTES = RouterModule.forRoot( appRoutes,{ useHash: false });
+export const APP_ROUTES = RouterModule.forRoot( appRoutes,{ useHash: true });

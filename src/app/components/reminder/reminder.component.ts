@@ -50,7 +50,7 @@ export class ReminderComponent implements OnInit, OnDestroy {
     this._activeRoute.params.subscribe(params =>{
       this.labelMonth = params['labelMonth'];
       this.reminderForm.patchValue({
-        dateStart: new Date(this.labelMonth)
+        dateStart: moment.unix(Number(this.labelMonth)).toDate()
       });
     });
     if( this.code !== undefined ){
