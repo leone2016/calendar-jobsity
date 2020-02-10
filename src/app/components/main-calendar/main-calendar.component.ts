@@ -73,7 +73,7 @@ export class MainCalendarComponent implements OnInit, OnDestroy {
     this.dayStart = this.date.day();
     this.daysInMonth =  this.date.daysInMonth();
     if ( this.dayStart > 1 ) {
-      this.daysInLastMonth = moment(`2020-${this.month - 1 }-01`, 'YYYY-MM-DD').daysInMonth();
+      this.daysInLastMonth = moment(`${this.year}-${this.month - 1 }-01`, 'YYYY-MM-DD').daysInMonth();
       this._fillingCalendar(this.daysInLastMonth - (this.dayStart - 2), this.daysInLastMonth, this.month - 1 );
     }
     this._fillingCalendar(1, this.daysInMonth, this.month );
