@@ -1,32 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Reminder} from "./reminder.model";
 import * as uuid from 'uuid';
 import {Location} from "@angular/common";
 import {CalendarService} from "../main-calendar/services/calendar.service";
-import {select, Store} from "@ngrx/store";
-import {GET_WEATHER, GetWeather} from "../main-calendar/store/calendar.action";
-import {GET_REMINDERS, LOAD_WEATHER} from "../main-calendar/store/calendar.selectors";
-import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
+import { Store} from "@ngrx/store";
+import {EnableLoadingAction, GetWeather} from "../main-calendar/store/calendar.action";
+import { LOAD_WEATHER} from "../main-calendar/store/calendar.selectors";
+import {Subject, Subscription} from "rxjs";
 import {WeatherModel} from "../main-calendar/model/wwather.model";
 import {ActivatedRoute, Router} from "@angular/router";
+import * as moment from 'moment';
+import {MatSnackBar} from "@angular/material";
+
 @Component({
   selector: 'app-reminder',
   templateUrl: './reminder.component.html',
   styleUrls: ['./reminder.component.css']
 })
-export class ReminderComponent implements OnInit {
+export class ReminderComponent implements OnInit, OnDestroy {
+  @Input() public code: string;
+
   public reminderForm: FormGroup;
-  private _unsubscribe: Subject<void> = new Subject<void>();
+  private _unsubscribe: Subscription = new Subscription() ;
   private weather: WeatherModel;
   private labelMonth: string;
+  private loadReminder: Reminder;
   constructor(private readonly _fb: FormBuilder,
               private calendarService: CalendarService,
               private _location: Location,
               private _store: Store<object>,
               private _router: Router,
-              private _activeRoute: ActivatedRoute) {
+              private _activeRoute: ActivatedRoute,
+              private _snackBar: MatSnackBar,) {
     this.init();
   }
 
@@ -34,11 +40,11 @@ export class ReminderComponent implements OnInit {
     this.reminderForm = this._fb.group({
       code: [''],
       city: ['', Validators.required],
-      isAllDay: [false, Validators.required],
       dateStart: [new Date(), Validators.required],
       description: ['', [Validators.required, Validators.maxLength(30)]],
       color: ['#d7dbef', Validators.required]
     });
+
   }
   ngOnInit() {
     this._activeRoute.params.subscribe(params =>{
@@ -46,12 +52,25 @@ export class ReminderComponent implements OnInit {
       this.reminderForm.patchValue({
         dateStart: new Date(this.labelMonth)
       });
-    })
-    this._store.select(LOAD_WEATHER).subscribe((weather: WeatherModel)=>{
+    });
+    if( this.code !== undefined ){
+      this.loadReminder = this.calendarService.getRemindersbyCode(this.code);
+      this.reminderForm.patchValue({
+        code: this.loadReminder.code,
+        city: this.loadReminder.city,
+        description: this.loadReminder.description,
+        color: this.loadReminder.color,
+        dateStart: moment.unix(Number(this.loadReminder.dateStart)).toDate()
+      });
+      this.searchWeather();
+    }
+    this._unsubscribe = this._store.select(LOAD_WEATHER).subscribe((weather: WeatherModel)=>{
       try {
-        this.weather = weather;
-        this.weather.main.temp_min =  this.weather.main.temp_min - 273.15;
-        this.weather.main.temp_max =  this.weather.main.temp_max - 273.15;
+        if(this.reminderForm.controls.city.value){
+          this.weather = weather;
+          this.weather.main.temp_min =  this.weather.main.temp_min - 273.15;
+          this.weather.main.temp_max =  this.weather.main.temp_max - 273.15;
+        }
       }catch (e) {
         console.log(e);
       }
@@ -66,24 +85,38 @@ export class ReminderComponent implements OnInit {
   public backClicked(): void {
     this._router.navigate(['/',this.labelMonth]);
   }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
   public onSubmit(): void {
     const dateStart = new Date(this.reminderForm.controls.dateStart.value);
-   /* const dateEnd = new Date(this.reminderForm.controls.dateEnd.value);*/
     let reminder = new Reminder({ ...this.reminderForm.value});
+    let localTime  = moment(dateStart.toString()).toDate();
+    let test  = moment(localTime).format('YYYY-MM-DD HH:mm:ss');
     reminder = {
       ...reminder,
-      code: uuid.v4(),
-      dateStart: dateStart.getTime().toString(),
+      code: this.code === undefined? uuid.v4(): this.code,
+      dateStart: moment(test).format("X"),
       dayCalendar: dateStart.getFullYear()+'-'+(dateStart.getMonth()+1)+'-'+dateStart.getDate(),
       monthCalendar: dateStart.getFullYear()+'-'+(dateStart.getMonth()+1),
     }
-
-    this.calendarService.addReminder(reminder);
-    this.backClicked();
-    console.log( reminder);
+    if( this.code !== undefined){
+      this.calendarService.editReminder(reminder);
+      this._store.dispatch( new  EnableLoadingAction());
+     this.openSnackBar('Reminder Updated', 'X');
+    }else{
+      this.calendarService.addReminder(reminder);
+      this.backClicked();
+    }
   }
 
   public _f(): any{
     return this.reminderForm.controls;
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribe.unsubscribe()
   }
 }

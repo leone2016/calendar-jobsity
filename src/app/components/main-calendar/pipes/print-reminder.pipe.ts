@@ -6,7 +6,7 @@ import {Reminder} from "../../reminder/reminder.model";
 })
 export class PrintReminderPipe implements PipeTransform {
 
-  transform(value: Reminder[], ...args: any[]): any {
+  transform(value: Reminder[], ...args: any[]): Reminder[] {
     const day = args[1]+'-'+args[0]['month']+'-'+args[0]['day'];
     return value.filter( x => x.dayCalendar === day);
   }

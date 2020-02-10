@@ -31,3 +31,11 @@ export const LOAD_WEATHER: MemoizedSelector<object, WeatherModel> = createSelect
   GET_CALENDAR_STATE,
   (calendarState: ICalendarState)=> calendarState.weather
 );
+export const ENABLE_LOADING: MemoizedSelector<object, boolean> = createSelector(
+  GET_CALENDAR_STATE,
+  (calendarState: ICalendarState)=> calendarState.isLoading
+);
+export const DISABLE_LOADING: MemoizedSelector<object, boolean> = createSelector(
+  GET_CALENDAR_STATE,
+  (calendarState: ICalendarState)=> calendarState.isLoading
+);

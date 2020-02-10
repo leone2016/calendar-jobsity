@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
 import { MainCalendarComponent } from './main-calendar.component';
 import {MatButtonModule, MatSnackBarModule} from '@angular/material';
 import { PrintDayPipe } from './pipes/print-day.pipe';
@@ -15,11 +14,12 @@ import {ColorPickerModule} from 'primeng/colorpicker';
 import {CalendarModule} from "primeng/calendar";
 import {InputTextModule} from "primeng/inputtext";
 import {PrintReminderPipe} from "./pipes/print-reminder.pipe";
+import {DialogModule} from "primeng/dialog";
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, SideBarComponent, MainCalendarComponent, PrintDayPipe,
+  declarations: [HeaderComponent, MainCalendarComponent, PrintDayPipe,
     ReminderComponent, PrintReminderPipe],
   exports: [
     MainCalendarComponent
@@ -34,7 +34,8 @@ import {PrintReminderPipe} from "./pipes/print-reminder.pipe";
     CalendarStoreModule,
     ColorPickerModule,
     InputTextModule,
-    MatButtonModule
+    MatButtonModule,
+    DialogModule
   ],
   providers: [
     CalendarService

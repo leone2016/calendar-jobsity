@@ -32,16 +32,16 @@ export class MainCalendarComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void> = new Subject<void>();
   private listReminders: Reminder[] = [];
 
-
-
   color: string;
-
+  displayReminders: boolean = false;
+  codeSelected: string = "";
   daysInLastMonth: number;
   constructor(private _store: Store<object>,
               private _snackBar: MatSnackBar,
               private _router: Router) { }
 
   ngOnInit() {
+    this.listReminders = [];
     this._store.pipe(
       select(GET_DATE),
       takeUntil(this._unsubscribe)
@@ -55,8 +55,12 @@ export class MainCalendarComponent implements OnInit, OnDestroy {
       takeUntil(this._unsubscribe)
     ).subscribe((reminders: Reminder[])=>{
       this.listReminders = reminders;
+      this.listReminders.sort((a, b) => (a.dateStart > b.dateStart) ? 1 : -1 )
     });
   }
+
+
+
 
   private init(): void {
     this.listMonth = [];
@@ -66,8 +70,6 @@ export class MainCalendarComponent implements OnInit, OnDestroy {
     this.date = moment(labelMonth, 'YYYY-MM-DD');
     this.nameMonth = moment(labelMonth, 'MMM MMMM');
     this._store.dispatch( new GetReminder(`${this.year}-${this.month}`));
-
-
     this.dayStart = this.date.day();
     this.daysInMonth =  this.date.daysInMonth();
     if ( this.dayStart > 1 ) {
@@ -89,9 +91,19 @@ export class MainCalendarComponent implements OnInit, OnDestroy {
       duration: 2000,
     });
   }
-
+  public preventPropagation(event: Event): void {
+    event.stopPropagation();
+  }
   ngOnDestroy(): void {
     this._unsubscribe.next();
     this._unsubscribe.complete();
+  }
+
+  getHour(dateStart: string): Date{
+    return moment.unix(Number(dateStart)).toDate()
+  }
+  showDialog(reminder: Reminder) {
+    this.codeSelected = reminder.code;
+    this.displayReminders = true;
   }
 }

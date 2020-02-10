@@ -260,7 +260,7 @@ svg#clouds {
 
 
 /* Responsive Styles */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1200px) {
 
   .card-container > *:not(.circle-link) ,
   .terminal {
@@ -363,6 +363,10 @@ svg#clouds {
   color: red;
   font-family: Consolas, "Helvetica Neue", sans-serif;
   font-size: .8rem;
+}
+
+.table thead td, .table thead th {
+  padding: 0.1rem;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

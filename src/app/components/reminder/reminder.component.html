@@ -1,5 +1,6 @@
-<a style="cursor: pointer; padding-left: 1rem" (click)="backClicked() "><i class="fa fa-angle-left fa-2x"></i></a>
-<div class="content remainder " role="main">
+<a style="cursor: pointer; padding-left: 1rem"
+   (click)="backClicked() " *ngIf="!code" ><i class="fa fa-angle-left fa-2x"></i></a>
+<div [ngClass]="code? '': 'content remainder'" role="main">
 <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" >
   <div class="form-group">
     <label  class="form-label" for="">Description</label>
@@ -51,6 +52,6 @@
     <label class="form-group" for="">Label color :  </label>
       <p-colorPicker formControlName="color"></p-colorPicker>
   </div>
-  <button class="ui-calendar" [disabled]="reminderForm.invalid" type="submit" mat-flat-button color="primary">Save</button>
+  <button class="ui-calendar" [disabled]="reminderForm.invalid" type="submit" mat-flat-button color="primary">{{code? 'Update': 'Save'}}</button>
 </form>
 </div>

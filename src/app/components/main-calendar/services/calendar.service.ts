@@ -9,6 +9,7 @@ import {catchError, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {ICalendarState} from '../store/reducers';
 import {WeatherModel} from '../model/wwather.model';
+import {GetReminder} from "../store/calendar.action";
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,21 @@ export class CalendarService {
     reminders.push(reminder);
     return this._localStorageService.set(this._getlocalStorageKey(), reminders);
   }
+  public editReminder(reminder: Reminder): void {
+    let reminders: Reminder[] =[];
+    if(!isNullOrUndefined(this.getReminders())){
+      reminders = this.getReminders();
+    }
+    let index = reminders.findIndex( x=> x.code === reminder.code);
+    reminders[index] = reminder;
+    this._localStorageService.set(this._getlocalStorageKey(), reminders);
+    this._store.dispatch( new GetReminder(`${reminder.monthCalendar}`));
+  }
   public getReminders(): Reminder[] {
     return this._localStorageService.get<Reminder[]>(this._getlocalStorageKey());
   }
   public getRemindersbyMonth(monthSearch: string):Reminder[] {
     try {
-      console.log(monthSearch)
       return this._localStorageService.get<Reminder[]>(this._getlocalStorageKey())
         .filter( x => x.monthCalendar === monthSearch ) ;
     }catch (e) {
@@ -42,15 +52,15 @@ export class CalendarService {
     }
 
   }
-/*  public getCountries(): Observable<Country[]>{
-    return this._http.get(`https://restcountries.eu/rest/v2/all`).pipe(
-      map( (resp: Country[])=>{
-        return resp;
-      }),
-      catchError((err: Error)=> throwError(err))
-    )
-  }*/
+  public getRemindersbyCode(code: string):Reminder {
+    try {
+      return this._localStorageService.get<Reminder[]>(this._getlocalStorageKey())
+        .find( x => x.code === code ) ;
+    }catch (e) {
+      catchError( e);
+    }
 
+  }
   public getWeather(city: string): Observable<WeatherModel>{
     return this._http.get(`${environment.apiOpenWeatherMap}?q=${city}&appid=${environment.openweatherKey}`).pipe(
       map( (resp: WeatherModel)=>{
