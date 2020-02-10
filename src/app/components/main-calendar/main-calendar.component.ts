@@ -20,17 +20,17 @@ export interface Calendar {
   styleUrls: ['./main-calendar.component.css']
 })
 export class MainCalendarComponent implements OnInit, OnDestroy {
-  private now: Moment;
-  private month: number;
-  private year: number;
-  private nameMonth: any;
-  private controllerArrows = 0;
-  private listMonth: Calendar[] = [];
-  private dayStart: number;
-  private daysInMonth: number;
-  private date: any;
-  private _unsubscribe: Subject<void> = new Subject<void>();
-  private listReminders: Reminder[] = [];
+  public now: Moment;
+  public month: number;
+  public year: number;
+  public nameMonth: any;
+  public controllerArrows = 0;
+  public listMonth: Calendar[] = [];
+  public dayStart: number;
+  public daysInMonth: number;
+  public date: any;
+  public _unsubscribe: Subject<void> = new Subject<void>();
+  public listReminders: Reminder[] = [];
 
   color: string;
   displayReminders: boolean = false;
@@ -74,11 +74,13 @@ export class MainCalendarComponent implements OnInit, OnDestroy {
     this.daysInMonth =  this.date.daysInMonth();
     if ( this.dayStart > 1 ) {
       this.daysInLastMonth = moment(`2020-${this.month - 1 }-01`, 'YYYY-MM-DD').daysInMonth();
-      this.fillingCalendar(this.daysInLastMonth - (this.dayStart - 2), this.daysInLastMonth, this.month - 1 );
+      this._fillingCalendar(this.daysInLastMonth - (this.dayStart - 2), this.daysInLastMonth, this.month - 1 );
     }
-    this.fillingCalendar(1, this.daysInMonth, this.month );
+    this._fillingCalendar(1, this.daysInMonth, this.month );
+    this._fillingCalendar(1, 35 - this.listMonth.length, this.month +1 );
   }
-  private fillingCalendar(start: number, end: number, month: number) {
+
+  private _fillingCalendar(start: number, end: number, month: number) {
     for ( let i = start ; i <= end ; i ++ ) {
       this.listMonth.push( {
         day: i,

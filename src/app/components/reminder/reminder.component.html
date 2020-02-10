@@ -1,6 +1,7 @@
 <a style="cursor: pointer; padding-left: 1rem"
    (click)="backClicked() " *ngIf="!code" ><i class="fa fa-angle-left fa-2x"></i></a>
 <div [ngClass]="code? '': 'content remainder'" role="main">
+  <h1 *ngIf="!code" >NEW REMINDER</h1>
 <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" >
   <div class="form-group">
     <label  class="form-label" for="">Description</label>

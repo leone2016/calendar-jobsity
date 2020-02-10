@@ -22,10 +22,10 @@ export class ReminderComponent implements OnInit, OnDestroy {
   @Input() public code: string;
 
   public reminderForm: FormGroup;
-  private _unsubscribe: Subscription = new Subscription() ;
-  private weather: WeatherModel;
-  private labelMonth: string;
-  private loadReminder: Reminder;
+  public _unsubscribe: Subscription = new Subscription() ;
+  public weather: WeatherModel;
+  public labelMonth: string;
+  public loadReminder: Reminder;
   constructor(private readonly _fb: FormBuilder,
               private calendarService: CalendarService,
               private _location: Location,

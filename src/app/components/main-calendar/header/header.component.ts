@@ -12,9 +12,9 @@ import {isNullOrUndefined} from "util";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private controllerArrows = 0;
-  private now: Moment;
-  private labelMonth: string;
+  public controllerArrows = 0;
+  public now: Moment;
+  public labelMonth: string;
   constructor(private _store: Store<object>,
               private _activeRoute: ActivatedRoute) { }
 
@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
       this._store.dispatch( new SetDate(this.now));
     })
   }
-  private moreMonths( diff?: number) {
+  public moreMonths( diff?: number) {
     this.controllerArrows += diff;
     this.now =  moment().add(   this.controllerArrows, 'month');
     this._store.dispatch( new SetDate(this.now));
